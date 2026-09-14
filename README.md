@@ -1,6 +1,6 @@
-# Email signature
+# Letterhead
 
-A free, self-hosted letterhead tool. Clients fill in their details, copy the signature, and paste it into Gmail, Outlook, Apple Mail, or Fastmail.
+A free email-signature tool. Clients fill in their details, copy the signature, and paste it into Gmail, Outlook, Apple Mail, or Fastmail.
 
 Nothing is uploaded. No account. No watermark. No third-party SaaS bill.
 
