@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ball in Court — Email signature</title>
+<title>Ball in Court — Letterhead</title>
 <style>
  :root{--paper:#f6efe1;--paper2:#fbf7ee;--ink:#211d17;--muted:#6f6656;--line:#dcd2bf;--blue:#1f4e6b;--blue2:#2f6690;--gold:#b07d2b;--done:#8a8272;--shadow:0 1px 0 #fff inset,0 8px 30px rgba(60,45,20,.10)}
  @media (prefers-color-scheme:dark){:root{--paper:#1a1714;--paper2:#211d19;--ink:#efe8da;--muted:#a89e8b;--line:#352f27;--blue:#7db4d8;--blue2:#9ec9e6;--gold:#d6a24e;--done:#7a7364;--shadow:0 10px 34px rgba(0,0,0,.4)}}
@@ -17,23 +17,21 @@
  li.checked span{text-decoration:line-through;color:var(--done)} .txt{flex:1} .done li{color:var(--done);font-size:14.5px} .foot{margin-top:26px;font-size:12.5px;color:var(--muted);font-style:italic;text-align:center}
 </style></head><body>
  <div class="sheet">
-  <div class="eyebrow">Ball in Court</div><h1>Email signature</h1>
-  <div class="meta">Phase: local app · Updated 2026-09-14 · ~/Projects/email-signature</div>
-  <div class="summary"><b>Your court.</b> The generator runs at http://localhost:8765. Clients cannot use it until it is on a public URL.</div>
+  <div class="eyebrow">Ball in Court</div><h1>Letterhead</h1>
+  <div class="meta">Phase: live · Updated 2026-09-14 · ~/Projects/email-signature</div>
+  <div class="summary"><b>Your court, lightly.</b> The app is live. Send clients <a href="https://letterhead-joey.vercel.app">letterhead-joey.vercel.app</a>. Optional: a prettier domain, and a paste test into Fastmail.</div>
   <section class="yours"><h2>⬜ Your court <span class="tag">— waiting on you</span></h2><ul>
-    <li><input type="checkbox" data-id="look"><span class="txt">Open http://localhost:8765 and decide if the letterhead look is good enough to give clients.</span></li>
-    <li><input type="checkbox" data-id="host"><span class="txt">Say go to put it on a public URL (GitHub Pages, Cloudflare Pages, or signatures.joeyzoccali.com).</span></li>
-    <li><input type="checkbox" data-id="paste"><span class="txt">Paste a copy into Fastmail and send yourself a test so we know Outlook/Gmail aren’t flattening it.</span></li>
+    <li><input type="checkbox" data-id="send"><span class="txt">Send https://letterhead-joey.vercel.app to a client (or use it yourself in Fastmail).</span></li>
+    <li><input type="checkbox" data-id="pretty"><span class="txt">Optional: say if you want letterhead.joeyzoccali.com instead of the Vercel URL (needs one DNS row in GHL).</span></li>
   </ul></section>
   <section class="mine"><h2>◐ My court <span class="tag">— on me, when you say go</span></h2><ul>
-    <li><input type="checkbox" data-id="deploy"><span class="txt">Deploy to a free static host and give you a client URL.</span></li>
-    <li><input type="checkbox" data-id="dns"><span class="txt">Point a subdomain (signatures.joeyzoccali.com) if you want that instead of a random host URL.</span></li>
+    <li><input type="checkbox" data-id="dns"><span class="txt">Wire letterhead.joeyzoccali.com if you want the pretty name. Vercel is already waiting on that hostname.</span></li>
   </ul></section>
   <hr class="rule">
   <section class="done"><h2>✅ Done <span class="tag">— complete</span></h2><ul>
-    <li><input type="checkbox" data-id="app" checked><span class="txt">Static app in ~/Projects/email-signature — three layouts, copy HTML, Gmail/Fastmail/Outlook/Apple guides.</span></li>
-    <li><input type="checkbox" data-id="tests" checked><span class="txt">python3 tests/contract.py → PASS. Browser: letterhead, split, compact, blank, Joey fill, dark thread.</span></li>
-    <li><input type="checkbox" data-id="nofp" checked><span class="txt">No FocalPoint, no FieldMesh, no SaaS bill. MIT.</span></li>
+    <li><input type="checkbox" data-id="live" checked><span class="txt">Live at https://letterhead-joey.vercel.app — SSO protection off, curl 200, browser split layout works.</span></li>
+    <li><input type="checkbox" data-id="gh" checked><span class="txt">Public repo https://github.com/jzoccali/letterhead connected to Vercel.</span></li>
+    <li><input type="checkbox" data-id="app" checked><span class="txt">Static generator: three layouts, copy HTML, Gmail/Fastmail/Outlook/Apple guides. No FocalPoint, no FieldMesh, no SaaS bill.</span></li>
   </ul></section>
   <div class="foot">Lives in the build · reopen anytime · check a box and it remembers.</div>
  </div>
