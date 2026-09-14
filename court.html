@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ball in Court — Email signature</title>
+<style>
+ :root{--paper:#f6efe1;--paper2:#fbf7ee;--ink:#211d17;--muted:#6f6656;--line:#dcd2bf;--blue:#1f4e6b;--blue2:#2f6690;--gold:#b07d2b;--done:#8a8272;--shadow:0 1px 0 #fff inset,0 8px 30px rgba(60,45,20,.10)}
+ @media (prefers-color-scheme:dark){:root{--paper:#1a1714;--paper2:#211d19;--ink:#efe8da;--muted:#a89e8b;--line:#352f27;--blue:#7db4d8;--blue2:#9ec9e6;--gold:#d6a24e;--done:#7a7364;--shadow:0 10px 34px rgba(0,0,0,.4)}}
+ *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.55;padding:28px 16px 60px;-webkit-font-smoothing:antialiased}
+ .sheet{max-width:760px;margin:0 auto;background:var(--paper2);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);padding:34px 34px 30px}
+ .eyebrow{font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);font-weight:700} h1{font-size:27px;margin:6px 0 4px;letter-spacing:-.01em}
+ .meta{font-size:13.5px;color:var(--muted);font-style:italic} .summary{font-size:15px;margin:14px 0 4px;padding:10px 14px;background:var(--paper);border-left:3px solid var(--gold);border-radius:0 6px 6px 0} .summary b{color:var(--blue)}
+ .rule{height:1px;background:var(--line);border:0;margin:22px 0 8px} h2{font-size:14px;letter-spacing:.04em;text-transform:uppercase;margin:24px 0 8px;display:flex;align-items:center;gap:9px}
+ h2 .tag{font-size:11px;font-weight:700;color:var(--muted);text-transform:none;letter-spacing:0;font-style:italic} .yours h2{color:var(--gold)} .mine h2{color:var(--blue)} .done h2{color:var(--done)}
+ ul{list-style:none;margin:0;padding:0} li{display:flex;align-items:flex-start;gap:11px;padding:8px 10px;border-radius:6px;font-size:15.5px} li:hover{background:var(--paper)}
+ input[type=checkbox]{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:19px;height:19px;margin-top:3px;border:1.6px solid var(--muted);border-radius:5px;background:var(--paper2);cursor:pointer;position:relative;transition:.12s}
+ .yours input{border-color:var(--gold)} .mine input{border-color:var(--blue2)} input:checked{background:var(--blue2);border-color:var(--blue2)} .yours input:checked{background:var(--gold);border-color:var(--gold)}
+ input:checked::after{content:"";position:absolute;left:5.5px;top:1.5px;width:5px;height:10px;border:solid #fff;border-width:0 2.4px 2.4px 0;transform:rotate(42deg)}
+ li.checked span{text-decoration:line-through;color:var(--done)} .txt{flex:1} .done li{color:var(--done);font-size:14.5px} .foot{margin-top:26px;font-size:12.5px;color:var(--muted);font-style:italic;text-align:center}
+</style></head><body>
+ <div class="sheet">
+  <div class="eyebrow">Ball in Court</div><h1>Email signature</h1>
+  <div class="meta">Phase: local app · Updated 2026-09-14 · ~/Projects/email-signature</div>
+  <div class="summary"><b>Your court.</b> The generator runs at http://localhost:8765. Clients cannot use it until it is on a public URL.</div>
+  <section class="yours"><h2>⬜ Your court <span class="tag">— waiting on you</span></h2><ul>
+    <li><input type="checkbox" data-id="look"><span class="txt">Open http://localhost:8765 and decide if the letterhead look is good enough to give clients.</span></li>
+    <li><input type="checkbox" data-id="host"><span class="txt">Say go to put it on a public URL (GitHub Pages, Cloudflare Pages, or signatures.joeyzoccali.com).</span></li>
+    <li><input type="checkbox" data-id="paste"><span class="txt">Paste a copy into Fastmail and send yourself a test so we know Outlook/Gmail aren’t flattening it.</span></li>
+  </ul></section>
+  <section class="mine"><h2>◐ My court <span class="tag">— on me, when you say go</span></h2><ul>
+    <li><input type="checkbox" data-id="deploy"><span class="txt">Deploy to a free static host and give you a client URL.</span></li>
+    <li><input type="checkbox" data-id="dns"><span class="txt">Point a subdomain (signatures.joeyzoccali.com) if you want that instead of a random host URL.</span></li>
+  </ul></section>
+  <hr class="rule">
+  <section class="done"><h2>✅ Done <span class="tag">— complete</span></h2><ul>
+    <li><input type="checkbox" data-id="app" checked><span class="txt">Static app in ~/Projects/email-signature — three layouts, copy HTML, Gmail/Fastmail/Outlook/Apple guides.</span></li>
+    <li><input type="checkbox" data-id="tests" checked><span class="txt">python3 tests/contract.py → PASS. Browser: letterhead, split, compact, blank, Joey fill, dark thread.</span></li>
+    <li><input type="checkbox" data-id="nofp" checked><span class="txt">No FocalPoint, no FieldMesh, no SaaS bill. MIT.</span></li>
+  </ul></section>
+  <div class="foot">Lives in the build · reopen anytime · check a box and it remembers.</div>
+ </div>
+ <script>var K="court:"+location.pathname,S=JSON.parse(localStorage.getItem(K)||"{}");document.querySelectorAll('input[type=checkbox]').forEach(function(c){var i=c.dataset.id;if(i in S)c.checked=S[i];var y=function(){c.closest('li').classList.toggle('checked',c.checked)};y();c.addEventListener('change',function(){S[i]=c.checked;localStorage.setItem(K,JSON.stringify(S));y()})});</script>
+</body></html>

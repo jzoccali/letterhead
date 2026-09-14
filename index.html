@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email signature — free letterhead tool from Joey Zoccali</title>
+  <meta name="description" content="Make a professional HTML email signature and paste it into Gmail, Outlook, Apple Mail, or Fastmail. Free. No account. No tracking.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="desk">
+      <header class="brand">
+        <p class="eyebrow">Free for clients</p>
+        <h1>Email signature</h1>
+        <p>Fill in the ticket. Copy. Paste into Gmail, Outlook, Apple Mail, or Fastmail. Nothing is uploaded. A tool from <a href="https://joeyzoccali.com">Joey Zoccali</a>.</p>
+      </header>
+
+      <div class="ticket">
+        <section class="block">
+          <div class="block-head">
+            <span class="num">01</span>
+            <h2>Layout</h2>
+          </div>
+          <div class="layouts" role="group" aria-label="Signature layout">
+            <button type="button" class="layout" data-layout="letterhead" aria-pressed="true">
+              <svg width="42" height="28" viewBox="0 0 42 28" fill="none" aria-hidden="true">
+                <rect x="8" y="3" width="26" height="6" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M6 14h30" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M6 19h18" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M6 23h22" stroke="currentColor" stroke-width="1.2"/>
+              </svg>
+              Letterhead
+            </button>
+            <button type="button" class="layout" data-layout="split" aria-pressed="false">
+              <svg width="42" height="28" viewBox="0 0 42 28" fill="none" aria-hidden="true">
+                <rect x="4" y="4" width="12" height="20" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M20 4v20" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M24 8h14" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M24 13h10" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M24 18h12" stroke="currentColor" stroke-width="1.2"/>
+              </svg>
+              Split
+            </button>
+            <button type="button" class="layout" data-layout="compact" aria-pressed="false">
+              <svg width="42" height="28" viewBox="0 0 42 28" fill="none" aria-hidden="true">
+                <path d="M6 10h30" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M6 15h22" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M6 19h26" stroke="currentColor" stroke-width="1.2"/>
+              </svg>
+              Compact
+            </button>
+          </div>
+        </section>
+
+        <section class="block">
+          <div class="block-head">
+            <span class="num">02</span>
+            <h2>Person</h2>
+          </div>
+          <div class="grid">
+            <label class="field"><span>Full name</span><input id="name" type="text" autocomplete="name"></label>
+            <label class="field"><span>Title</span><input id="title" type="text" autocomplete="organization-title"></label>
+            <label class="field full"><span>Company</span><input id="company" type="text" autocomplete="organization"></label>
+          </div>
+        </section>
+
+        <section class="block">
+          <div class="block-head">
+            <span class="num">03</span>
+            <h2>Contact</h2>
+          </div>
+          <div class="grid">
+            <label class="field"><span>Phone</span><input id="phone" type="tel" autocomplete="tel"></label>
+            <label class="field"><span>Email</span><input id="email" type="email" autocomplete="email"></label>
+            <label class="field"><span>Website</span><input id="website" type="text" autocomplete="url" placeholder="company.com"></label>
+            <label class="field"><span>City / address</span><input id="address" type="text" autocomplete="address-level2"></label>
+          </div>
+        </section>
+
+        <section class="block">
+          <div class="block-head">
+            <span class="num">04</span>
+            <h2>Mark</h2>
+          </div>
+          <div class="grid">
+            <label class="field full">
+              <span>Logo URL</span>
+              <div class="logo-row">
+                <input id="logo" type="url" placeholder="https://…/logo.png">
+                <label class="upload" for="logoFile">Upload</label>
+                <input id="logoFile" type="file" accept="image/*" hidden>
+              </div>
+              <span class="hint">A public URL survives paste into Gmail. Uploads are for preview unless you host the file.</span>
+            </label>
+            <label class="field full">
+              <span>Headshot URL</span>
+              <div class="logo-row">
+                <input id="photo" type="url" placeholder="https://…/photo.jpg">
+                <label class="upload" for="photoFile">Upload</label>
+                <input id="photoFile" type="file" accept="image/*" hidden>
+              </div>
+            </label>
+            <label class="field">
+              <span>Typeface</span>
+              <select id="font">
+                <option value="Georgia, 'Times New Roman', serif">Georgia</option>
+                <option value="'Times New Roman', Times, serif">Times</option>
+                <option value="Arial, Helvetica, sans-serif">Arial</option>
+                <option value="Verdana, Geneva, sans-serif">Verdana</option>
+                <option value="Tahoma, Geneva, sans-serif">Tahoma</option>
+                <option value="'Trebuchet MS', Helvetica, sans-serif">Trebuchet</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Ink color</span>
+              <div class="color-row">
+                <input id="color" type="color" value="#1F4D3A">
+                <input id="colorHex" type="text" maxlength="7" value="#1F4D3A" autocomplete="off">
+              </div>
+              <div class="swatches" id="swatches"></div>
+            </label>
+          </div>
+        </section>
+
+        <section class="block">
+          <div class="block-head">
+            <span class="num">05</span>
+            <h2>Links</h2>
+          </div>
+          <div class="grid">
+            <label class="field"><span>LinkedIn</span><input id="linkedin" type="url" placeholder="https://linkedin.com/in/…"></label>
+            <label class="field"><span>Instagram</span><input id="instagram" type="url"></label>
+            <label class="field"><span>Facebook</span><input id="facebook" type="url"></label>
+            <label class="field"><span>YouTube</span><input id="youtube" type="url"></label>
+            <label class="field full"><span>X / Twitter</span><input id="x" type="url"></label>
+          </div>
+        </section>
+
+        <section class="block">
+          <div class="block-head">
+            <span class="num">06</span>
+            <h2>Extras</h2>
+          </div>
+          <label class="check"><input id="showCta" type="checkbox"> Booking button</label>
+          <div id="ctaWrap" class="grid">
+            <label class="field"><span>Button label</span><input id="bookingLabel" type="text"></label>
+            <label class="field"><span>Booking URL</span><input id="booking" type="url" placeholder="https://calendly.com/…"></label>
+          </div>
+          <label class="check"><input id="showDisclaimer" type="checkbox"> Disclaimer</label>
+          <div id="disclaimerWrap">
+            <label class="field full"><span>Disclaimer text</span><textarea id="disclaimer"></textarea></label>
+          </div>
+        </section>
+
+        <div class="desk-actions">
+          <button type="button" class="btn btn-primary" id="copyRich">Copy signature</button>
+          <button type="button" class="btn btn-ghost" id="copyHtml">Copy HTML</button>
+          <button type="button" class="btn btn-ghost" id="loadSample">Load sample</button>
+          <button type="button" class="btn btn-ghost" id="startBlank">Start blank</button>
+        </div>
+
+        <section class="block">
+          <div class="block-head">
+            <span class="num">07</span>
+            <h2>Paste it</h2>
+          </div>
+          <div class="tabs" role="tablist">
+            <button type="button" class="tab" data-tab="gmail" aria-selected="true">Gmail</button>
+            <button type="button" class="tab" data-tab="fastmail" aria-selected="false">Fastmail</button>
+            <button type="button" class="tab" data-tab="outlook" aria-selected="false">Outlook</button>
+            <button type="button" class="tab" data-tab="apple" aria-selected="false">Apple Mail</button>
+          </div>
+          <div class="guide on" data-tab="gmail">
+            <ol>
+              <li>Copy signature.</li>
+              <li>Gmail → Settings → See all settings → General → Signature.</li>
+              <li>Create new, paste, set as default, Save changes.</li>
+            </ol>
+          </div>
+          <div class="guide" data-tab="fastmail">
+            <ol>
+              <li>Copy signature.</li>
+              <li>Fastmail → Settings → Signatures.</li>
+              <li>New signature, paste, assign to the identity.</li>
+            </ol>
+          </div>
+          <div class="guide" data-tab="outlook">
+            <ol>
+              <li>Copy signature (or Copy HTML for Classic Outlook).</li>
+              <li>New Outlook: gear → Accounts → Signatures → New → paste.</li>
+              <li>Classic: File → Options → Mail → Signatures. If paste strips formatting, replace the <code>.htm</code> file in <code>%appdata%\Microsoft\Signatures</code> with the HTML source.</li>
+            </ol>
+          </div>
+          <div class="guide" data-tab="apple">
+            <ol>
+              <li>Copy signature.</li>
+              <li>Mail → Settings → Signatures → + → paste.</li>
+              <li>Untick “Always match my default message font.”</li>
+            </ol>
+          </div>
+        </section>
+      </div>
+
+      <p class="desk-foot">Runs in your browser. No account, no watermark, no invoice. Hosted for clients of <a href="https://joeyzoccali.com">joeyzoccali.com</a>.</p>
+    </aside>
+
+    <main class="proof">
+      <div class="proof-bar">
+        <h2>Proof</h2>
+        <div class="mode">
+          <button type="button" data-mode="light" aria-pressed="true">Light</button>
+          <button type="button" data-mode="dark" aria-pressed="false">Dark</button>
+        </div>
+      </div>
+      <div class="desk-actions" style="margin:0 0 8px;">
+        <button type="button" class="btn btn-primary" id="copyRichProof">Copy signature</button>
+      </div>
+      <p class="proof-hint">Dark is a dark-thread check. If the name vanishes, pick a brighter ink color — Gmail will not invert it for you.</p>
+      <article class="letter" id="letter">
+        <div class="letter-meta">
+          <div><strong>From</strong> · <span id="letterFrom">Marina Costa &lt;marina@costaair.example&gt;</span></div>
+          <div><strong>Subject</strong> · Tuesday window</div>
+        </div>
+        <div class="letter-body">
+          <p>Hi Mike — we’re on for 9am. I’ll text when we’re 20 minutes out.</p>
+          <p>Thanks,</p>
+        </div>
+        <div class="sig-stage" id="sigPreview"></div>
+      </article>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
