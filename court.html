@@ -18,20 +18,19 @@
 </style></head><body>
  <div class="sheet">
   <div class="eyebrow">Ball in Court</div><h1>Letterhead</h1>
-  <div class="meta">Phase: live · Updated 2026-09-14 · ~/Projects/email-signature</div>
-  <div class="summary"><b>Your court, lightly.</b> The app is live. Send clients <a href="https://letterhead-joey.vercel.app">letterhead-joey.vercel.app</a>. Optional: a prettier domain, and a paste test into Fastmail.</div>
+  <div class="meta">Phase: live on custom domain · Updated 2026-09-14 · ~/Projects/email-signature</div>
+  <div class="summary"><b>Your court, lightly.</b> Send clients <a href="https://letterhead.joeyzoccali.com">letterhead.joeyzoccali.com</a>. Optional: paste a signature into Fastmail and send yourself a test.</div>
   <section class="yours"><h2>⬜ Your court <span class="tag">— waiting on you</span></h2><ul>
-    <li><input type="checkbox" data-id="send"><span class="txt">Send https://letterhead-joey.vercel.app to a client (or use it yourself in Fastmail).</span></li>
-    <li><input type="checkbox" data-id="pretty"><span class="txt">Optional: say if you want letterhead.joeyzoccali.com instead of the Vercel URL (needs one DNS row in GHL).</span></li>
+    <li><input type="checkbox" data-id="send"><span class="txt">Send https://letterhead.joeyzoccali.com to a client (or use it in Fastmail).</span></li>
   </ul></section>
   <section class="mine"><h2>◐ My court <span class="tag">— on me, when you say go</span></h2><ul>
-    <li><input type="checkbox" data-id="dns"><span class="txt">Wire letterhead.joeyzoccali.com if you want the pretty name. Vercel is already waiting on that hostname.</span></li>
+    <li><input type="checkbox" data-id="none"><span class="txt">Nothing unless the Fastmail paste looks wrong.</span></li>
   </ul></section>
   <hr class="rule">
   <section class="done"><h2>✅ Done <span class="tag">— complete</span></h2><ul>
-    <li><input type="checkbox" data-id="live" checked><span class="txt">Live at https://letterhead-joey.vercel.app — SSO protection off, curl 200, browser split layout works.</span></li>
-    <li><input type="checkbox" data-id="gh" checked><span class="txt">Public repo https://github.com/jzoccali/letterhead connected to Vercel.</span></li>
-    <li><input type="checkbox" data-id="app" checked><span class="txt">Static generator: three layouts, copy HTML, Gmail/Fastmail/Outlook/Apple guides. No FocalPoint, no FieldMesh, no SaaS bill.</span></li>
+    <li><input type="checkbox" data-id="dns" checked><span class="txt">GHL DNS A letterhead → 76.76.21.21. Did not touch apex, www, MX, or reply.</span></li>
+    <li><input type="checkbox" data-id="https" checked><span class="txt">https://letterhead.joeyzoccali.com — Let's Encrypt cert, BrowserOS loaded the app.</span></li>
+    <li><input type="checkbox" data-id="app" checked><span class="txt">Letterhead generator live. No FocalPoint, no FieldMesh, no SaaS bill.</span></li>
   </ul></section>
   <div class="foot">Lives in the build · reopen anytime · check a box and it remembers.</div>
  </div>

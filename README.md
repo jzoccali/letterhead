@@ -4,7 +4,7 @@ A free email-signature tool. Clients fill in their details, copy the signature, 
 
 Nothing is uploaded. No account. No watermark. No third-party SaaS bill.
 
-**Live:** https://letterhead-joey.vercel.app  
+**Live:** https://letterhead.joeyzoccali.com  
 **Source:** https://github.com/jzoccali/letterhead
 
 Send that live URL to a client. They fill in the ticket, copy, paste.
