@@ -1,5 +1,5 @@
 (function () {
-  var STORAGE = "letterhead.v1";
+  var STORAGE = "letterhead.v2";
 
   var SAMPLE = {
     name: "Marina Costa",
@@ -18,11 +18,17 @@
     x: "",
     booking: "https://calendly.com/",
     bookingLabel: "Book a service call",
+    extra1Label: "Request a quote",
+    extra1Url: "https://costaair.example/quote",
+    extra2Label: "",
+    extra2Url: "",
     showCta: true,
     showDisclaimer: false,
     disclaimer:
       "This message is intended only for the person to whom it is addressed. If you received it in error, please delete it.",
     font: "Georgia, 'Times New Roman', serif",
+    nameSize: "18",
+    bodySize: "12",
     color: "#1F4D3A",
     layout: "letterhead"
   };
@@ -44,10 +50,16 @@
     x: "",
     booking: "",
     bookingLabel: "Book a call",
+    extra1Label: "",
+    extra1Url: "",
+    extra2Label: "",
+    extra2Url: "",
     showCta: false,
     showDisclaimer: false,
     disclaimer: SAMPLE.disclaimer,
     font: "Arial, Helvetica, sans-serif",
+    nameSize: "18",
+    bodySize: "12",
     color: "#1C1814",
     layout: "letterhead"
   };
@@ -57,7 +69,8 @@
   var FIELDS = [
     "name", "title", "company", "phone", "email", "website", "address",
     "logo", "photo", "linkedin", "instagram", "facebook", "youtube", "x",
-    "booking", "bookingLabel", "disclaimer", "font", "color"
+    "extra1Label", "extra1Url", "extra2Label", "extra2Url",
+    "booking", "bookingLabel", "disclaimer", "font", "nameSize", "bodySize", "color"
   ];
 
   function $(id) { return document.getElementById(id); }
@@ -98,6 +111,8 @@
     });
     v.showCta = $("showCta").checked;
     v.showDisclaimer = $("showDisclaimer").checked;
+    v.nameSize = v.nameSize || "18";
+    v.bodySize = v.bodySize || "12";
     v.layout = document.querySelector(".layout[aria-pressed='true']").getAttribute("data-layout");
     return v;
   }
@@ -134,6 +149,11 @@
     }
   }
 
+  function namePx(v) { return String(v.nameSize || "18"); }
+  function bodyPx(v) { return String(v.bodySize || "12"); }
+  function titlePx(v) { return String(parseInt(bodyPx(v), 10) + 1); }
+  function smallPx(v) { return String(Math.max(10, parseInt(bodyPx(v), 10) - 1)); }
+
   function socials(v) {
     var list = [];
     if (v.linkedin) list.push({ label: "LinkedIn", url: v.linkedin });
@@ -141,6 +161,17 @@
     if (v.facebook) list.push({ label: "Facebook", url: v.facebook });
     if (v.youtube) list.push({ label: "YouTube", url: v.youtube });
     if (v.x) list.push({ label: "X", url: v.x });
+    return list;
+  }
+
+  function extras(v) {
+    var list = [];
+    function add(label, url) {
+      if (!url) return;
+      list.push({ label: label || stripProto(url), url: url });
+    }
+    add(v.extra1Label, v.extra1Url);
+    add(v.extra2Label, v.extra2Url);
     return list;
   }
 
@@ -161,12 +192,12 @@
     return bits;
   }
 
-  function socialRow(list, f, color) {
+  function socialRow(list, f, color, size) {
     if (!list.length) return "";
     var html = '<table cellpadding="0" cellspacing="0" border="0"><tr>';
     list.forEach(function (s, i) {
       var pad = i === 0 ? "0" : "14";
-      html += '<td style="padding-left:' + pad + 'px;font-family:' + f + ';font-size:11px;letter-spacing:0.04em;text-transform:uppercase;">';
+      html += '<td style="padding-left:' + pad + 'px;font-family:' + f + ';font-size:' + size + 'px;letter-spacing:0.04em;text-transform:uppercase;">';
       html += '<a href="' + escAttr(addProto(s.url)) + '" style="color:' + color + ';text-decoration:none;font-family:' + f + ';">' + esc(s.label) + "</a>";
       html += "</td>";
     });
@@ -180,7 +211,7 @@
     return (
       '<table cellpadding="0" cellspacing="0" border="0" style="margin:0;">' +
       "<tr><td bgcolor=\"" + escAttr(v.color) + '" style="background-color:' + escAttr(v.color) + ';padding:8px 16px;">' +
-      '<a href="' + escAttr(addProto(v.booking)) + '" style="color:#ffffff;text-decoration:none;font-family:' + f + ';font-size:12px;font-weight:bold;display:inline-block;">' +
+      '<a href="' + escAttr(addProto(v.booking)) + '" style="color:#ffffff;text-decoration:none;font-family:' + f + ';font-size:' + bodyPx(v) + 'px;font-weight:bold;display:inline-block;">' +
       esc(label) +
       "</a></td></tr></table>"
     );
@@ -189,7 +220,7 @@
   function disclaimerBlock(v, f) {
     if (!v.showDisclaimer || !v.disclaimer) return "";
     return (
-      '<p style="margin:10px 0 0 0;font-family:' + f + ';font-size:10px;line-height:1.45;color:#777777;max-width:520px;">' +
+      '<p style="margin:10px 0 0 0;font-family:' + f + ';font-size:' + smallPx(v) + 'px;line-height:1.45;color:#777777;max-width:520px;">' +
       esc(v.disclaimer).replace(/\n/g, "<br>") +
       "</p>"
     );
@@ -215,22 +246,25 @@
       h += "</td></tr>";
     }
     h += '<tr><td style="border-top:2px solid ' + c + ';padding:12px 0 0 0;">';
-    if (v.name) h += '<p style="margin:0;font-family:' + f + ';font-size:18px;line-height:1.25;font-weight:bold;color:' + c + ';">' + esc(v.name) + "</p>";
+    if (v.name) h += '<p style="margin:0;font-family:' + f + ';font-size:' + namePx(v) + 'px;line-height:1.25;font-weight:bold;color:' + c + ';">' + esc(v.name) + "</p>";
     var sub = [v.title, v.company].filter(Boolean).join("  ·  ");
-    if (sub) h += '<p style="margin:4px 0 0 0;font-family:' + f + ';font-size:13px;color:' + muted + ';">' + esc(sub) + "</p>";
+    if (sub) h += '<p style="margin:4px 0 0 0;font-family:' + f + ';font-size:' + titlePx(v) + 'px;color:' + muted + ';">' + esc(sub) + "</p>";
     h += "</td></tr>";
 
     var bits = contactBits(v, f, muted);
     if (bits.length) {
-      h += '<tr><td style="padding:10px 0 0 0;font-family:' + f + ';font-size:12px;line-height:1.5;color:' + muted + ';">';
+      h += '<tr><td style="padding:10px 0 0 0;font-family:' + f + ';font-size:' + bodyPx(v) + 'px;line-height:1.5;color:' + muted + ';">';
       h += bits.join('&nbsp;&nbsp;<span style="color:#c8c1b4;">·</span>&nbsp;&nbsp;');
       h += "</td></tr>";
     }
 
+    var extra = socialRow(extras(v), f, c, bodyPx(v));
+    if (extra) h += '<tr><td style="padding:10px 0 0 0;">' + extra + "</td></tr>";
+
     var cta = ctaBlock(v, f);
     if (cta) h += '<tr><td style="padding:12px 0 0 0;">' + cta + "</td></tr>";
 
-    var soc = socialRow(socials(v), f, c);
+    var soc = socialRow(socials(v), f, c, smallPx(v));
     if (soc) h += '<tr><td style="padding:12px 0 0 0;">' + soc + "</td></tr>";
 
     var disc = disclaimerBlock(v, f);
@@ -256,9 +290,9 @@
       h += '<td width="16" style="width:16px;font-size:0;">&nbsp;</td>';
     }
     h += '<td valign="top">';
-    if (v.name) h += '<p style="margin:0;font-family:' + f + ';font-size:17px;font-weight:bold;color:' + c + ';">' + esc(v.name) + "</p>";
-    if (v.title) h += '<p style="margin:3px 0 0 0;font-family:' + f + ';font-size:12px;color:' + muted + ';">' + esc(v.title) + "</p>";
-    if (v.company) h += '<p style="margin:2px 0 0 0;font-family:' + f + ';font-size:12px;color:' + muted + ';">' + esc(v.company) + "</p>";
+    if (v.name) h += '<p style="margin:0;font-family:' + f + ';font-size:' + namePx(v) + 'px;font-weight:bold;color:' + c + ';">' + esc(v.name) + "</p>";
+    if (v.title) h += '<p style="margin:3px 0 0 0;font-family:' + f + ';font-size:' + titlePx(v) + 'px;color:' + muted + ';">' + esc(v.title) + "</p>";
+    if (v.company) h += '<p style="margin:2px 0 0 0;font-family:' + f + ';font-size:' + titlePx(v) + 'px;color:' + muted + ';">' + esc(v.company) + "</p>";
 
     var rows = [];
     if (v.phone) rows.push({ href: telHref(v.phone), text: v.phone });
@@ -270,7 +304,7 @@
       rows.forEach(function (r, i) {
         var pb = i === rows.length - 1 ? "0" : "3";
         h += "<tr>";
-        h += '<td style="padding:0 0 ' + pb + "px 0;font-family:" + f + ";font-size:12px;color:" + muted + ';">';
+        h += '<td style="padding:0 0 ' + pb + "px 0;font-family:" + f + ";font-size:" + bodyPx(v) + "px;color:" + muted + ';">';
         if (r.href) {
           h += '<a href="' + escAttr(r.href) + '" style="color:' + muted + ";text-decoration:none;font-family:" + f + ';">' + esc(r.text) + "</a>";
         } else {
@@ -281,9 +315,11 @@
       h += "</table>";
     }
 
+    var extra = socialRow(extras(v), f, c, bodyPx(v));
+    if (extra) h += '<div style="padding-top:10px;">' + extra + "</div>";
     var cta = ctaBlock(v, f);
     if (cta) h += '<div style="padding-top:12px;">' + cta + "</div>";
-    var soc = socialRow(socials(v), f, c);
+    var soc = socialRow(socials(v), f, c, smallPx(v));
     if (soc) h += '<div style="padding-top:12px;">' + soc + "</div>";
     var disc = disclaimerBlock(v, f);
     if (disc) h += disc;
@@ -297,17 +333,19 @@
     var muted = "#555555";
     var h = '<table cellpadding="0" cellspacing="0" border="0" width="480" style="font-family:' + f + ';max-width:480px;">';
     h += "<tr><td>";
-    if (v.name) h += '<span style="font-family:' + f + ";font-size:15px;font-weight:bold;color:" + c + ';">' + esc(v.name) + "</span>";
+    if (v.name) h += '<span style="font-family:' + f + ";font-size:" + namePx(v) + "px;font-weight:bold;color:" + c + ';">' + esc(v.name) + "</span>";
     var sub = [v.title, v.company].filter(Boolean).join(" · ");
-    if (sub) h += '<span style="font-family:' + f + ";font-size:12px;color:" + muted + ';">' + (v.name ? "&nbsp;&nbsp;|&nbsp;&nbsp;" : "") + esc(sub) + "</span>";
+    if (sub) h += '<span style="font-family:' + f + ";font-size:" + titlePx(v) + "px;color:" + muted + ';">' + (v.name ? "&nbsp;&nbsp;|&nbsp;&nbsp;" : "") + esc(sub) + "</span>";
     h += "</td></tr>";
     var bits = contactBits(v, f, muted);
     if (bits.length) {
-      h += '<tr><td style="padding-top:4px;font-family:' + f + ';font-size:12px;">' + bits.join("&nbsp;&nbsp;·&nbsp;&nbsp;") + "</td></tr>";
+      h += '<tr><td style="padding-top:4px;font-family:' + f + ';font-size:' + bodyPx(v) + 'px;">' + bits.join("&nbsp;&nbsp;·&nbsp;&nbsp;") + "</td></tr>";
     }
+    var extra = socialRow(extras(v), f, c, bodyPx(v));
+    if (extra) h += '<tr><td style="padding-top:8px;">' + extra + "</td></tr>";
     var cta = ctaBlock(v, f);
     if (cta) h += '<tr><td style="padding-top:10px;">' + cta + "</td></tr>";
-    var soc = socialRow(socials(v), f, c);
+    var soc = socialRow(socials(v), f, c, smallPx(v));
     if (soc) h += '<tr><td style="padding-top:8px;">' + soc + "</td></tr>";
     var disc = disclaimerBlock(v, f);
     if (disc) h += "<tr><td>" + disc + "</td></tr>";

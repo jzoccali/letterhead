@@ -107,12 +107,36 @@
             <label class="field">
               <span>Typeface</span>
               <select id="font">
+                <option value="Arial, Helvetica, sans-serif">Arial</option>
+                <option value="Helvetica, Arial, sans-serif">Helvetica</option>
                 <option value="Georgia, 'Times New Roman', serif">Georgia</option>
                 <option value="'Times New Roman', Times, serif">Times</option>
-                <option value="Arial, Helvetica, sans-serif">Arial</option>
                 <option value="Verdana, Geneva, sans-serif">Verdana</option>
                 <option value="Tahoma, Geneva, sans-serif">Tahoma</option>
                 <option value="'Trebuchet MS', Helvetica, sans-serif">Trebuchet</option>
+                <option value="Palatino, 'Palatino Linotype', 'Times New Roman', serif">Palatino</option>
+                <option value="Calibri, 'Segoe UI', Arial, sans-serif">Calibri</option>
+                <option value="'Lucida Sans Unicode', 'Lucida Grande', sans-serif">Lucida</option>
+                <option value="'Courier New', Courier, monospace">Courier</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Name size</span>
+              <select id="nameSize">
+                <option value="14">14 — small</option>
+                <option value="16">16</option>
+                <option value="18" selected>18 — regular</option>
+                <option value="20">20</option>
+                <option value="22">22 — large</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Body size</span>
+              <select id="bodySize">
+                <option value="11">11 — small</option>
+                <option value="12" selected>12 — regular</option>
+                <option value="13">13</option>
+                <option value="14">14 — large</option>
               </select>
             </label>
             <label class="field">
@@ -137,7 +161,12 @@
             <label class="field"><span>Facebook</span><input id="facebook" type="url"></label>
             <label class="field"><span>YouTube</span><input id="youtube" type="url"></label>
             <label class="field full"><span>X / Twitter</span><input id="x" type="url"></label>
+            <label class="field"><span>Extra link 1 — label</span><input id="extra1Label" type="text" placeholder="Business Diagnostic"></label>
+            <label class="field"><span>Extra link 1 — URL</span><input id="extra1Url" type="url" placeholder="https://joeyzoccali.com/diagnostic"></label>
+            <label class="field"><span>Extra link 2 — label</span><input id="extra2Label" type="text" placeholder="Free rank scan"></label>
+            <label class="field"><span>Extra link 2 — URL</span><input id="extra2Url" type="url" placeholder="https://rankandkeep.com/free-report"></label>
           </div>
+          <p class="hint">Extras are for a diagnostic, a rank scan, a menu, a booking page — whatever you actually send people to.</p>
         </section>
 
         <section class="block">
