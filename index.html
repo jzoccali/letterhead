@@ -34,35 +34,10 @@
             <span class="num">01</span>
             <h2>Layout</h2>
           </div>
-          <div class="layouts" role="group" aria-label="Signature layout">
-            <button type="button" class="layout" data-layout="letterhead" aria-pressed="true">
-              <svg width="42" height="28" viewBox="0 0 42 28" fill="none" aria-hidden="true">
-                <rect x="8" y="3" width="26" height="6" stroke="currentColor" stroke-width="1.4"/>
-                <path d="M6 14h30" stroke="currentColor" stroke-width="1.6"/>
-                <path d="M6 19h18" stroke="currentColor" stroke-width="1.2"/>
-                <path d="M6 23h22" stroke="currentColor" stroke-width="1.2"/>
-              </svg>
-              Letterhead
-            </button>
-            <button type="button" class="layout" data-layout="split" aria-pressed="false">
-              <svg width="42" height="28" viewBox="0 0 42 28" fill="none" aria-hidden="true">
-                <rect x="4" y="4" width="12" height="20" stroke="currentColor" stroke-width="1.4"/>
-                <path d="M20 4v20" stroke="currentColor" stroke-width="1.6"/>
-                <path d="M24 8h14" stroke="currentColor" stroke-width="1.2"/>
-                <path d="M24 13h10" stroke="currentColor" stroke-width="1.2"/>
-                <path d="M24 18h12" stroke="currentColor" stroke-width="1.2"/>
-              </svg>
-              Split
-            </button>
-            <button type="button" class="layout" data-layout="compact" aria-pressed="false">
-              <svg width="42" height="28" viewBox="0 0 42 28" fill="none" aria-hidden="true">
-                <path d="M6 10h30" stroke="currentColor" stroke-width="1.6"/>
-                <path d="M6 15h22" stroke="currentColor" stroke-width="1.2"/>
-                <path d="M6 19h26" stroke="currentColor" stroke-width="1.2"/>
-              </svg>
-              Compact
-            </button>
-          </div>
+          <input type="hidden" id="layout" value="letterhead">
+          <p class="tpl-now">Current: <strong id="tplName">Stacked</strong></p>
+          <button type="button" class="btn btn-primary" id="openTpl">Choose a template</button>
+          <p class="hint">Eight layouts. The cards show your name, photo, and logo — not grey boxes.</p>
         </section>
 
         <section class="block pane" data-pane="person">
@@ -277,6 +252,13 @@
       </article>
     </main>
   </div>
+  <dialog id="tplDialog" class="tpl-dialog">
+    <div class="tpl-head">
+      <h2>Choose a template</h2>
+      <button type="button" class="tpl-close" id="closeTpl" aria-label="Close">×</button>
+    </div>
+    <div class="tpl-grid" id="tplGrid"></div>
+  </dialog>
   <script src="app.js"></script>
 </body>
 </html>

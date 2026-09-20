@@ -70,7 +70,18 @@
     "name", "title", "company", "phone", "email", "website", "address",
     "logo", "photo", "linkedin", "instagram", "facebook", "youtube", "x",
     "extra1Label", "extra1Url", "extra2Label", "extra2Url",
-    "booking", "bookingLabel", "disclaimer", "font", "nameSize", "bodySize", "color"
+    "booking", "bookingLabel", "disclaimer", "font", "nameSize", "bodySize", "color", "layout"
+  ];
+
+  var LAYOUTS = [
+    { id: "letterhead", label: "Stacked" },
+    { id: "split", label: "Photo left" },
+    { id: "logo-left", label: "Logo left" },
+    { id: "compact", label: "One line" },
+    { id: "stacked-photo", label: "Name then photo" },
+    { id: "banner", label: "Name bar" },
+    { id: "footer", label: "Footer bar" },
+    { id: "card", label: "Card" }
   ];
 
   function $(id) { return document.getElementById(id); }
@@ -113,7 +124,7 @@
     v.showDisclaimer = $("showDisclaimer").checked;
     v.nameSize = v.nameSize || "18";
     v.bodySize = v.bodySize || "12";
-    v.layout = document.querySelector(".layout[aria-pressed='true']").getAttribute("data-layout");
+    v.layout = v.layout || "letterhead";
     return v;
   }
 
@@ -125,9 +136,6 @@
     $("showCta").checked = !!v.showCta;
     $("showDisclaimer").checked = !!v.showDisclaimer;
     $("colorHex").value = v.color || "#1C1814";
-    document.querySelectorAll(".layout").forEach(function (b) {
-      b.setAttribute("aria-pressed", b.getAttribute("data-layout") === (v.layout || "letterhead") ? "true" : "false");
-    });
     document.querySelectorAll(".swatch").forEach(function (b) {
       b.setAttribute("aria-pressed", b.getAttribute("data-color").toLowerCase() === String(v.color || "").toLowerCase() ? "true" : "false");
     });
@@ -353,21 +361,184 @@
     return h;
   }
 
+  function renderLogoLeft(v) {
+    var copy = Object.assign({}, v, { photo: "", logo: v.logo || v.photo });
+    return renderSplit(copy);
+  }
+
+  function renderStackedPhoto(v) {
+    var f = v.font;
+    var c = v.color;
+    var muted = "#555555";
+    var h = '<table cellpadding="0" cellspacing="0" border="0" width="520" style="font-family:' + f + ';max-width:520px;">';
+    h += "<tr><td>";
+    if (v.name) h += '<p style="margin:0;font-family:' + f + ';font-size:' + namePx(v) + 'px;font-weight:bold;color:' + c + ';">' + esc(v.name) + "</p>";
+    var sub = [v.title, v.company].filter(Boolean).join(" · ");
+    if (sub) h += '<p style="margin:4px 0 0 0;font-family:' + f + ';font-size:' + titlePx(v) + 'px;color:' + muted + ';">' + esc(sub) + "</p>";
+    if (v.photo || v.logo) {
+      var src = v.photo || v.logo;
+      var w = v.photo ? 72 : 140;
+      h += '<div style="padding-top:10px;"><img src="' + escAttr(src) + '" alt="" width="' + w + '" style="display:block;border:0;width:' + w + 'px;max-width:' + w + 'px;height:auto;" /></div>';
+    }
+    var bits = contactBits(v, f, muted);
+    if (bits.length) h += '<p style="margin:10px 0 0 0;font-family:' + f + ';font-size:' + bodyPx(v) + 'px;color:' + muted + ';">' + bits.join("&nbsp;&nbsp;·&nbsp;&nbsp;") + "</p>";
+    var extra = socialRow(extras(v), f, c, bodyPx(v));
+    if (extra) h += '<div style="padding-top:8px;">' + extra + "</div>";
+    var cta = ctaBlock(v, f);
+    if (cta) h += '<div style="padding-top:10px;">' + cta + "</div>";
+    var soc = socialRow(socials(v), f, c, smallPx(v));
+    if (soc) h += '<div style="padding-top:8px;">' + soc + "</div>";
+    var disc = disclaimerBlock(v, f);
+    if (disc) h += disc;
+    h += "</td></tr></table>";
+    return h;
+  }
+
+  function renderBanner(v) {
+    var f = v.font;
+    var c = v.color;
+    var muted = "#555555";
+    var h = '<table cellpadding="0" cellspacing="0" border="0" width="520" style="font-family:' + f + ';max-width:520px;">';
+    h += '<tr><td bgcolor="' + escAttr(c) + '" style="background-color:' + escAttr(c) + ';padding:10px 14px;">';
+    if (v.name) h += '<span style="font-family:' + f + ';font-size:' + namePx(v) + 'px;font-weight:bold;color:#ffffff;">' + esc(v.name) + "</span>";
+    var sub = [v.title, v.company].filter(Boolean).join(" · ");
+    if (sub) h += '<span style="font-family:' + f + ';font-size:' + titlePx(v) + 'px;color:#ffffff;">' + (v.name ? "&nbsp;&nbsp;·&nbsp;&nbsp;" : "") + esc(sub) + "</span>";
+    h += "</td></tr><tr><td style=\"padding:12px 0 0 0;\">";
+    if (v.photo) h += '<img src="' + escAttr(v.photo) + '" alt="" width="56" height="56" style="display:block;border:0;width:56px;height:56px;margin:0 0 10px 0;" />';
+    var bits = contactBits(v, f, muted);
+    if (bits.length) h += '<p style="margin:0;font-family:' + f + ';font-size:' + bodyPx(v) + 'px;color:' + muted + ';">' + bits.join("&nbsp;&nbsp;·&nbsp;&nbsp;") + "</p>";
+    var extra = socialRow(extras(v), f, c, bodyPx(v));
+    if (extra) h += '<div style="padding-top:8px;">' + extra + "</div>";
+    var cta = ctaBlock(v, f);
+    if (cta) h += '<div style="padding-top:10px;">' + cta + "</div>";
+    var soc = socialRow(socials(v), f, c, smallPx(v));
+    if (soc) h += '<div style="padding-top:8px;">' + soc + "</div>";
+    var disc = disclaimerBlock(v, f);
+    if (disc) h += disc;
+    h += "</td></tr></table>";
+    return h;
+  }
+
+  function renderFooter(v) {
+    var f = v.font;
+    var c = v.color;
+    var muted = "#555555";
+    var h = '<table cellpadding="0" cellspacing="0" border="0" width="520" style="font-family:' + f + ';max-width:520px;">';
+    h += "<tr><td>";
+    if (v.logo) h += '<img src="' + escAttr(v.logo) + '" alt="" width="120" style="display:block;border:0;width:120px;max-width:120px;height:auto;margin:0 0 10px 0;" />';
+    if (v.name) h += '<p style="margin:0;font-family:' + f + ';font-size:' + namePx(v) + 'px;font-weight:bold;color:' + c + ';">' + esc(v.name) + "</p>";
+    var sub = [v.title, v.company].filter(Boolean).join(" · ");
+    if (sub) h += '<p style="margin:4px 0 0 0;font-family:' + f + ';font-size:' + titlePx(v) + 'px;color:' + muted + ';">' + esc(sub) + "</p>";
+    var extra = socialRow(extras(v), f, c, bodyPx(v));
+    if (extra) h += '<div style="padding-top:8px;">' + extra + "</div>";
+    var cta = ctaBlock(v, f);
+    if (cta) h += '<div style="padding-top:10px;">' + cta + "</div>";
+    h += "</td></tr>";
+    var bits = contactBits(v, f, "#ffffff");
+    if (bits.length) {
+      h += '<tr><td bgcolor="' + escAttr(c) + '" style="background-color:' + escAttr(c) + ';padding:8px 12px;margin-top:10px;">';
+      h += '<span style="font-family:' + f + ';font-size:' + bodyPx(v) + 'px;color:#ffffff;">' + bits.join("&nbsp;&nbsp;·&nbsp;&nbsp;") + "</span>";
+      h += "</td></tr>";
+    }
+    var soc = socialRow(socials(v), f, c, smallPx(v));
+    if (soc) h += '<tr><td style="padding-top:8px;">' + soc + "</td></tr>";
+    var disc = disclaimerBlock(v, f);
+    if (disc) h += "<tr><td>" + disc + "</td></tr>";
+    h += "</table>";
+    return h;
+  }
+
+  function renderCard(v) {
+    var f = v.font;
+    var c = v.color;
+    var muted = "#555555";
+    var left = v.photo || v.logo;
+    var h = '<table cellpadding="0" cellspacing="0" border="0" width="520" style="font-family:' + f + ';max-width:520px;">';
+    h += "<tr>";
+    if (left) {
+      h += '<td valign="middle" width="80" style="padding:0 14px 0 0;">';
+      h += '<img src="' + escAttr(left) + '" alt="" width="72" height="72" style="display:block;border:0;width:72px;height:72px;" />';
+      h += "</td>";
+    }
+    h += '<td valign="middle">';
+    if (v.name) h += '<p style="margin:0;font-family:' + f + ';font-size:' + namePx(v) + 'px;font-weight:bold;color:' + c + ';">' + esc(v.name) + "</p>";
+    if (v.title) h += '<p style="margin:3px 0 0 0;font-family:' + f + ';font-size:' + titlePx(v) + 'px;color:' + muted + ';">' + esc(v.title) + "</p>";
+    if (v.company) h += '<p style="margin:2px 0 0 0;font-family:' + f + ';font-size:' + titlePx(v) + 'px;color:' + muted + ';">' + esc(v.company) + "</p>";
+    h += "</td></tr>";
+    var bits = contactBits(v, f, muted);
+    if (bits.length) h += '<tr><td colspan="2" style="padding-top:10px;font-family:' + f + ';font-size:' + bodyPx(v) + 'px;color:' + muted + ';">' + bits.join("&nbsp;&nbsp;·&nbsp;&nbsp;") + "</td></tr>";
+    var extra = socialRow(extras(v), f, c, bodyPx(v));
+    if (extra) h += '<tr><td colspan="2" style="padding-top:8px;">' + extra + "</td></tr>";
+    var cta = ctaBlock(v, f);
+    if (cta) h += '<tr><td colspan="2" style="padding-top:10px;">' + cta + "</td></tr>";
+    var soc = socialRow(socials(v), f, c, smallPx(v));
+    if (soc) h += '<tr><td colspan="2" style="padding-top:8px;">' + soc + "</td></tr>";
+    var disc = disclaimerBlock(v, f);
+    if (disc) h += '<tr><td colspan="2">' + disc + "</td></tr>";
+    h += "</table>";
+    return h;
+  }
+
   function hasContent(v) {
     return !!(v.name || v.title || v.company || v.phone || v.email || v.website || v.logo || v.photo);
   }
 
-  function renderHtml(v) {
+  function renderHtml(v, layout) {
     if (!hasContent(v)) return "";
-    if (v.layout === "split") return renderSplit(v);
-    if (v.layout === "compact") return renderCompact(v);
+    var L = layout || v.layout;
+    if (L === "split") return renderSplit(v);
+    if (L === "compact") return renderCompact(v);
+    if (L === "logo-left") return renderLogoLeft(v);
+    if (L === "stacked-photo") return renderStackedPhoto(v);
+    if (L === "banner") return renderBanner(v);
+    if (L === "footer") return renderFooter(v);
+    if (L === "card") return renderCard(v);
     return renderLetterhead(v);
+  }
+
+  function layoutLabel(id) {
+    var found = LAYOUTS.filter(function (L) { return L.id === id; })[0];
+    return found ? found.label : "Stacked";
+  }
+
+  function setLayout(id) {
+    $("layout").value = id;
+    if ($("tplName")) $("tplName").textContent = layoutLabel(id);
+    paint();
+  }
+
+  function previewData() {
+    var v = readForm();
+    return hasContent(v) ? v : SAMPLE;
+  }
+
+  function paintGallery() {
+    var grid = $("tplGrid");
+    if (!grid) return;
+    var v = previewData();
+    var current = $("layout").value || "letterhead";
+    grid.innerHTML = "";
+    LAYOUTS.forEach(function (L) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "tpl-card" + (L.id === current ? " on" : "");
+      btn.setAttribute("data-layout", L.id);
+      btn.innerHTML =
+        '<span class="tpl-label">' + esc(L.label) + "</span>" +
+        '<span class="tpl-frame"><span class="tpl-scale">' + (renderHtml(v, L.id) || emptyProof()) + "</span></span>";
+      btn.addEventListener("click", function () {
+        setLayout(L.id);
+        $("tplDialog").close();
+      });
+      grid.appendChild(btn);
+    });
   }
 
   function paint() {
     var v = readForm();
     $("disclaimerWrap").style.display = v.showDisclaimer ? "" : "none";
     $("ctaWrap").style.display = v.showCta ? "" : "none";
+    if ($("tplName")) $("tplName").textContent = layoutLabel(v.layout);
     var html = renderHtml(v);
     $("sigPreview").innerHTML = html || emptyProof();
     var fromName = v.name || "Your name";
@@ -507,12 +678,15 @@
       paint();
     });
 
-    document.querySelectorAll(".layout").forEach(function (b) {
-      b.addEventListener("click", function () {
-        document.querySelectorAll(".layout").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
-        b.setAttribute("aria-pressed", "true");
-        paint();
-      });
+    $("openTpl").addEventListener("click", function () {
+      paintGallery();
+      $("tplDialog").showModal();
+    });
+    $("closeTpl").addEventListener("click", function () {
+      $("tplDialog").close();
+    });
+    $("tplDialog").addEventListener("click", function (e) {
+      if (e.target === $("tplDialog")) $("tplDialog").close();
     });
 
     bindUpload("logoFile", "logo");
