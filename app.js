@@ -387,7 +387,17 @@
     }, 1600);
   }
 
-  async function copyRich() {
+  function showPane(id) {
+    document.querySelectorAll(".pane").forEach(function (p) {
+      p.classList.toggle("on", p.getAttribute("data-pane") === id);
+    });
+    document.querySelectorAll("[data-pane-go]").forEach(function (b) {
+      b.setAttribute("aria-current", b.getAttribute("data-pane-go") === id ? "true" : "false");
+    });
+  }
+
+  async function copyRich(btn) {
+    btn = btn || $("copyRich");
     var html = $("sigPreview").innerHTML;
     if (!html || $("sigPreview").querySelector(".placeholder")) return;
     try {
@@ -398,7 +408,7 @@
             "text/plain": new Blob([$("sigPreview").innerText], { type: "text/plain" })
           })
         ]);
-        flash($("copyRich"), "Copied");
+        flash(btn, "Copied");
         return;
       }
     } catch (e) {}
@@ -414,7 +424,7 @@
     sel.addRange(range);
     try {
       document.execCommand("copy");
-      flash($("copyRich"), "Copied");
+      flash(btn, "Copied");
     } catch (e2) {
       alert("Copy failed. Select the signature in the preview and copy it yourself.");
     }
@@ -508,8 +518,9 @@
     bindUpload("logoFile", "logo");
     bindUpload("photoFile", "photo");
 
-    $("copyRich").addEventListener("click", copyRich);
-    $("copyRichProof").addEventListener("click", copyRich);
+    $("copyRich").addEventListener("click", function () { copyRich($("copyRich")); });
+    $("copyRichProof").addEventListener("click", function () { copyRich($("copyRichProof")); });
+    $("jumpPaste").addEventListener("click", function () { showPane("paste"); });
     $("copyHtml").addEventListener("click", copySource);
     $("loadSample").addEventListener("click", function () {
       writeForm(SAMPLE);
@@ -530,6 +541,14 @@
         });
       });
     });
+
+    document.querySelectorAll("[data-pane-go]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        showPane(b.getAttribute("data-pane-go"));
+      });
+    });
+
+    showPane("layout");
 
     document.querySelectorAll(".mode button").forEach(function (btn) {
       btn.addEventListener("click", function () {

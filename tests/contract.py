@@ -43,6 +43,9 @@ ok("localStorage" in js, "form persistence missing")
 ok("#8b3d2e" in css.lower() or "#8B3D2E" in css, "oxblood app accent missing")
 ok("violet" not in css.lower() and "indigo" not in css.lower(), "purple palette slipped in")
 ok('id="sigPreview"' in html, "preview mount missing")
+ok("New message" in html, "Gmail-style compose chrome missing")
+ok("data-pane-go" in html, "builder section tabs missing")
+ok("How to add it" in html, "jump to paste guide missing")
 ok("nginx" in (ROOT / "Dockerfile").read_text().lower(), "Dockerfile is not nginx static")
 
 if fails:
